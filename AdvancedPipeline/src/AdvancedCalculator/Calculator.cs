@@ -1,4 +1,6 @@
-﻿using System;
+
+cat > AdvancedPipeline/src/AdvancedCalculator/Calculator.cs << 'EOF'
+using System;
 
 public class Calculator
 {
@@ -22,13 +24,13 @@ public class StatisticsCalculator
 {
     public double CalculateAverage(params double[] numbers)
     {
-        if (numbers.Length == 0) throw new ArgumentException(""Массив не может быть пустым"");
+        if (numbers.Length == 0) throw new ArgumentException("Array cannot be empty");
         return numbers.Average();
     }
 
     public double FindMax(params double[] numbers)
     {
-        if (numbers.Length == 0) throw new ArgumentException(""Массив не может быть пустым"");
+        if (numbers.Length == 0) throw new ArgumentException("Array cannot be empty");
         return numbers.Max();
     }
 }
