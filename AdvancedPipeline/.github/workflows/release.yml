@@ -1,0 +1,43 @@
+﻿name: Release Pipeline
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ""8.x""
+
+    - name: Build Release Version
+      run: |
+        dotnet build src/AdvancedCalculator/ --configuration Release
+
+    - name: Publish Application
+      run: |
+        dotnet publish src/AdvancedCalculator/ -c Release -o ./publish --self-contained false
+
+    - name: Create Archive with Binaries
+      run: |
+        zip -r calculator-v${{ github.ref_name }}.zip ./publish/
+        mkdir -p artifacts
+        mv calculator-v${{ github.ref_name }}.zip artifacts/
+
+    - name: Upload Artifacts to Release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ./artifacts/calculator-v${{ github.ref_name }}.zip
+        asset_name: calculator-v${{ github.ref_name }}.zip
+        asset_content_type: application/zip
