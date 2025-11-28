@@ -8,8 +8,8 @@ on:
 
 env:
   DOTNET_VERSION: '8.x'
-  PROJECT_PATH: 'src/AdvancedCalculator'
-  TEST_PATH: 'tests/AdvancedCalculator.Tests'
+  PROJECT_PATH: 'AdvancedPipeline/src/AdvancedCalculator'
+  TEST_PATH: 'AdvancedPipeline/tests/AdvancedCalculator.Tests'
 
 jobs:
   code-quality:
